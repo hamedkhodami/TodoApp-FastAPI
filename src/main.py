@@ -1,10 +1,12 @@
-from fastapi import FastAPI, Depends, Response, Request
+from datetime import time
+
+from fastapi import FastAPI, Request
 from fastapi_swagger import patch_fastapi
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from tasks.routes import router as task_router
 from account.routes import router as account_router
-from account.models import UserModel
-from auth.jwt_auth import get_jwt_authenticated_user
+
 
 tags_metadata = [
     {"name": "Tasks",
@@ -33,3 +35,23 @@ patch_fastapi(app)
 
 app.include_router(task_router)
 app.include_router(account_router)
+
+
+# Todo
+@app.middleware("http")
+async def add_process_time_headers(request: Request, call_next):
+    pass
+
+origins = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    max_age=600,
+)
