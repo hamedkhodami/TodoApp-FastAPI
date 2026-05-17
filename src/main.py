@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Response, Request
 from fastapi_swagger import patch_fastapi
 from contextlib import asynccontextmanager
 from tasks.routes import router as task_router
 from account.routes import router as account_router
 from account.models import UserModel
-from auth.token_auth import get_authenticated_user
+from auth.jwt_auth import get_jwt_authenticated_user
 
 tags_metadata = [
     {"name": "Tasks",
@@ -33,21 +33,3 @@ patch_fastapi(app)
 
 app.include_router(task_router)
 app.include_router(account_router)
-
-
-@app.get("/public")
-async def public_root():
-    return {"message": "This is a public root"}
-
-@app.get("/private")
-async def private_root(user = Depends(get_authenticated_user)):
-    print(user)
-    return {"message": "This is a private root"}
-
-#----
-# -- for basic authentication --
-# from auth.basic_auth import get_current_user
-# @app.get("/private")
-# async def private_root(user: UserModel = Depends(get_current_user)):
-#     print(user)
-#     return {"message": "This is a private root"}
