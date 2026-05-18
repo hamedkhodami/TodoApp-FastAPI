@@ -1,11 +1,10 @@
 from core.database import SessionLocal
-from sqlalchemy.orm import Session
 from account.models import UserModel
 from tasks.models import TaskModel
 from faker import Faker
 
-
 fake = Faker()
+
 
 def seed_users(db):
     user = UserModel(username=fake.user_name())
@@ -15,6 +14,7 @@ def seed_users(db):
     db.refresh(user)
     return user
 
+
 def seed_tasks(db, user, count=10):
     task_list = []
     for _ in range(10):
@@ -23,7 +23,7 @@ def seed_tasks(db, user, count=10):
                 user_id=user.id,
                 title=fake.sentence(nb_words=count),
                 description=fake.sentence(nb_words=count),
-                is_completed=fake.boolean()
+                is_completed=fake.boolean(),
             )
         )
     db.add_all(task_list)

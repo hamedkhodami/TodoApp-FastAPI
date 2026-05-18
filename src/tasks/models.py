@@ -2,11 +2,12 @@ from sqlalchemy import Column, Integer, String, DateTime, func, Boolean, Foreign
 from core.database import Base
 from sqlalchemy.orm import relationship
 
+
 class TaskModel(Base):
-    __tablename__ = 'tasks'
+    __tablename__ = "tasks"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey("users.id"))
 
     title = Column(String(150), nullable=False)
     description = Column(String(500), nullable=False)

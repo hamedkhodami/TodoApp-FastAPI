@@ -1,9 +1,11 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, Boolean, ForeignKey
 from core.database import Base
 from sqlalchemy.orm import relationship
+
 # from passlib.context import CryptContext
 
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 class UserModel(Base):
     __tablename__ = "users"
@@ -16,6 +18,7 @@ class UserModel(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     tasks = relationship("TaskModel", back_populates="user")
+
 
 #    def hash_password(self, plain_password: str) -> str:
 #        return pwd_context.hash(plain_password)

@@ -1,15 +1,14 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional
-from datetime import datetime
 
 
 class UserLoginSchema(BaseModel):
-    username: str = Field(...,max_length=250, description="User's username")
+    username: str = Field(..., max_length=250, description="User's username")
     password: str = Field(..., description="User's password")
+
 
 class UserRegisterSchema(BaseModel):
     username: str = Field(..., max_length=250, description="User's username")
-    password: str = Field(...,description="User's password")
+    password: str = Field(..., description="User's password")
     password_confirm: str = Field(..., description="User's password confirm")
 
     @field_validator("password_confirm")
@@ -20,4 +19,4 @@ class UserRegisterSchema(BaseModel):
 
 
 class UserRefreshTokenSchema(BaseModel):
-    token: str = Field(...,description="Refresh token")
+    token: str = Field(..., description="Refresh token")
